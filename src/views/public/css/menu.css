@@ -1,0 +1,50 @@
+body {
+    background-color: #122e43;
+    font-size: 2.5em;
+}
+
+input {
+    width: 100%;
+    border-radius: 0.3em!important;
+    height: 2em!important;
+    margin-bottom: 1em;
+    outline: none;
+    border: none;
+    background-color: #dadada;
+
+    font-weight: bold;
+    color: #4d4d4d;
+    padding-left: 0.7em;
+}
+
+input:focus {
+    border: none;
+    outline: none;
+}
+
+input::placeholder {
+    color: #a9a9a9;
+    font-weight: bold;
+}
+
+input:focus::placeholder {
+    opacity: 0;
+}
+
+.btnColorOne {
+    width: 100%;
+    height: 5em!important;
+    border-radius: 0.6em!important;
+}
+
+.btnColorOne .textBtn {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.info {
+    color: rgb(212, 212, 212);
+    font-size: 0.4em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}

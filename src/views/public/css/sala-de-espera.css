@@ -1,0 +1,77 @@
+.sideNavIzquierdo {
+    background-color: #122e43;
+    height: 100vh;
+}
+
+.correcto {
+    display: flex;
+    align-items: center;
+}
+
+.palomita {
+    width: 1.3em;
+    position: relative;
+    right: 30px;
+}
+
+.bolita {
+    width: 2.5em;
+}
+
+.respuestas {
+    display: flex;
+}
+
+.incorrecto {
+    display: flex;
+    align-items: center;
+}
+
+.tache {
+    width: 1.3em;
+    position: relative;
+    right: 30px;
+}
+
+.jugador {
+    color: #fff;
+    margin-top: 2em;
+}
+
+.ecuacion {
+    width: 100%;
+    font-size: 4em;
+}
+
+.X {
+    color: #cf2323;
+}
+
+.centrarHorizontalVertical {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input {
+    width: 100%;
+    border-radius: 0.3em !important;
+    height: 2em !important;
+    background-color: #e7e6e6;
+    font-weight: bold;
+    color: #636363;
+    padding-left: 0.7em;
+    outline: none;
+    border: none;
+}
+
+.info{
+    color: rgb(94, 94, 94);
+    font-weight: bold;
+}
+
+.juegoBloqueado {
+    filter: blur(8px);
+}
+
