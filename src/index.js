@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 // Rutas de la aplicacion
 const usuarioRutas = require('./routes/usuario');
 const menuRutas = require('./routes/menu');
-const salaEspera = require('./routes/sala-espera');
+const salaEspera = require('./routes/sala');
 
 app.use(usuarioRutas);
 app.use(menuRutas);

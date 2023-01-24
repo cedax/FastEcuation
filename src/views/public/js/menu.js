@@ -5,23 +5,34 @@ var socket = io();
 
 // Se ejecuta despues de comprobar si el codigo de sala existe en el servidor
 socket.on('C_SalaVerificada', function (msg) {
-    if (msg.message === 'Sala no encontrada') {
-        alert(msg.message);
+    if (msg.status) {
+        socket.emit('S_UnirSala', {idSala: msg.data.codigo, nickname: msg.data.nicknameNuevoJugador});
+        // Redireccionar a la pagina de juego EN ESTE PUNTO SE UNIRA A UNA SALA YA CREADA
     }else {
-        socket.emit('S_UnirSala', msg.codigo);
+        alert(msg.message);
     }
 });
 
 // Se ejecuta despues de crear una nueva sala
 socket.on('C_NuevaSala', function (msg) {
-    console.log(msg);
+    if(msg.status){
+        // La sala se creo con exito
+        socket.emit('S_UnirSala', {idSala: msg.data.codigo, nickname: msg.data.nicknameNuevoJugador});
+        // Redireccionar a la pagina de juego EN ESTE PUNTO SE CREARA UNA SALA NUEVA
+    }else {
+        console.log(msg.message + ':' + msg.error);
+    }
 });
 
 // Se ejecuta cuando un nuevo jugador se une a la sala C_NuevoJugador
+// Este evento escucha deberia estar en la sala de espera
 socket.on('C_NuevoJugador', function (msg) {
+    // agregar html del nuevo jugador
     console.log(msg);
 });
 
+// Se ejecuta cuando un jugador abandona la sala
+// Este evento escucha deberia estar en la sala de espera
 socket.on('C_JugadorAbandono', function (msg) {
     console.log(msg);
 });
@@ -31,6 +42,8 @@ socket.on('C_JugadorAbandono', function (msg) {
 $('#btnPlay').click(function () {
     // Valor del input de codigo de sala
     let idSala = $('#idSala').val();
+    // Valor del input de nickname
+    let nickname = $('#nickname').val();
     
     // Si el usuario ha introducido un codigo de sala
     if (idSala.length > 0) {
@@ -41,7 +54,7 @@ $('#btnPlay').click(function () {
         }
 
         // Checar si el codigo de sala existe en el servidor
-        socket.emit('S_VerificaSala', idSala);
+        socket.emit('S_VerificaSala', {codigo: idSala, nickname: nickname});
     }else {
         // De no haber introducido un codigo de sala, se crea una sala nueva
         let codigoSala = Math.random().toString(36).substr(2, 4);

@@ -13,12 +13,13 @@ const eventosSocketIo = (io) => {
             
         });
 
-        socket.on('S_VerificaSala', (IdSala) => {
+        socket.on('S_VerificaSala', ({codigo, nickname}) => {
             axios.get('http://localhost:3000/sala/verificar', {
                 params: {
-                    idSala: IdSala
+                    idSala: codigo
                 }
             }).then(function (response) {
+                response.data.nicknameNuevoJugador = nickname;
                 socket.emit('C_SalaVerificada', response.data);
             }).catch(function (error) {
                 socket.emit('C_SalaVerificada', error.response.data);
@@ -26,27 +27,25 @@ const eventosSocketIo = (io) => {
         });
 
         socket.on('S_NuevaSala', (idSala) => {
-            socket.leave(Array.from(socket.rooms)[0]);
-            socket.join(idSala);
-
             axios.post('http://localhost:3000/sala/crear', {
                 codigo: idSala
             }).then(function (response) {
                 socket.emit('C_NuevaSala', response.data);
             }).catch(function (error) {
-                if (error.code === 'ERR_BAD_RESPONSE') {
-                    socket.emit('C_NuevaSala', 'Error al crear sala, reintentalo');
-                } else {
-                    socket.emit('C_NuevaSala', 'Error inesperado, contacte a soporte y proporcione el siguiente codigo: ' + error);
-                }
+                socket.emit('C_NuevaSala', response.data);
             });
         });
 
-        socket.on('S_UnirSala', (idSala) => {
+        socket.on('S_UnirSala', ({idSala, nickname}) => {
+            // Abandonar la sala anterior -- Posible uso de for para abandonar todas las salas
             socket.leave(Array.from(socket.rooms)[0]);
+            // Unirse a la nueva sala
             socket.join(idSala);
+            
             //console.log(io.sockets.adapter.rooms.get(idSala));
-            socket.to(idSala).emit('C_NuevoJugador', 'Nuevo jugador se unio a la sala');
+
+            // Enviar mensaje a todos los sockets de la sala
+            socket.to(idSala).emit('C_NuevoJugador', nickname + ' se unio a la sala');
         });
     });
 }

@@ -9,7 +9,6 @@ const UsuarioSchema = new mongoose.Schema({
     contrasena: {
         type: String,
         required: true,
-        unique: true,
         minlength: 6
     },
     puntos: {

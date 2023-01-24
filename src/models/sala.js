@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const usuarioModel = require('./usuario');
 
 const SalaSchema = new mongoose.Schema({
     codigo: {
