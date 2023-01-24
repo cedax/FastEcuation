@@ -81,7 +81,7 @@ exports.agregarJugador = (req, res) => {
                     res.status(200).send({
                         status: false,
                         message: 'El nickname ya existe en la sala',
-                        data: data[0]
+                        error: data[0]
                     });
                 }else {
                     // agregar nickname a data[0].usuarios
@@ -91,7 +91,7 @@ exports.agregarJugador = (req, res) => {
                         if (err) {
                             res.status(500).send({
                                 status: false,
-                                data: err,
+                                error: err,
                                 message: 'Error al actualizar la sala'
                             });
                         } else {
@@ -107,7 +107,7 @@ exports.agregarJugador = (req, res) => {
                 res.status(404).send({
                     status: false,
                     message: 'Sala encontrada pero no se pudo agregar el jugador',
-                    data: err
+                    error: err
                 });
             }
         }
@@ -138,7 +138,7 @@ exports.eliminarJugador = (req, res) => {
                         if (err) {
                             res.status(500).send({
                                 status: false,
-                                data: err,
+                                error: err,
                                 message: 'Error al actualizar la sala'
                             });
                         } else {
@@ -153,14 +153,14 @@ exports.eliminarJugador = (req, res) => {
                     res.status(200).send({
                         status: false,
                         message: 'El nickname no existe en la sala',
-                        data: data[0]
+                        error: data[0]
                     });
                 }
             }catch (err){
                 res.status(404).send({
                     status: false,
                     message: 'Sala encontrada pero no se pudo eliminar el jugador',
-                    data: err
+                    error: err
                 });
             }
         }

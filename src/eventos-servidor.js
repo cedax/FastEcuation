@@ -19,20 +19,21 @@ const eventosSocketIo = (io) => {
                     idSala: codigo
                 }
             }).then(function (response) {
-                response.data.nicknameNuevoJugador = nickname;
+                response.data.data.nicknameNuevoJugador = nickname;
                 socket.emit('C_SalaVerificada', response.data);
             }).catch(function (error) {
                 socket.emit('C_SalaVerificada', error.response.data);
             });
         });
 
-        socket.on('S_NuevaSala', (idSala) => {
+        socket.on('S_NuevaSala', ({idSala, nickname}) => {
             axios.post('http://localhost:3000/sala/crear', {
                 codigo: idSala
             }).then(function (response) {
+                response.data.data.nicknameNuevoJugador = nickname;
                 socket.emit('C_NuevaSala', response.data);
             }).catch(function (error) {
-                socket.emit('C_NuevaSala', response.data);
+                socket.emit('C_NuevaSala', error.response.data);
             });
         });
 
@@ -44,8 +45,21 @@ const eventosSocketIo = (io) => {
             
             //console.log(io.sockets.adapter.rooms.get(idSala));
 
-            // Enviar mensaje a todos los sockets de la sala
-            socket.to(idSala).emit('C_NuevoJugador', nickname + ' se unio a la sala');
+            axios.get('http://localhost:3000/sala/agregar-jugador', {
+                params: {
+                    idSala: idSala,
+                    nickname: nickname
+                }
+            }).then(function (response) {
+                if(response.data.status){
+                    // Enviar mensaje a todos los sockets de la sala
+                    socket.to(idSala).emit('C_NuevoJugadorSala', nickname + ' se unio a la sala');
+                }else {
+                    socket.emit('C_UnirSala', response.data);
+                }
+            }).catch(function (error) {
+                console.log(error.response.data);
+            });
         });
     });
 }

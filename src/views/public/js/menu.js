@@ -24,9 +24,14 @@ socket.on('C_NuevaSala', function (msg) {
     }
 });
 
+// Se ejecuta cuando hubo un error al unirse a una sala
+socket.on('C_UnirSala', function (msg) {
+    console.log(msg.message);
+});
+
 // Se ejecuta cuando un nuevo jugador se une a la sala C_NuevoJugador
 // Este evento escucha deberia estar en la sala de espera
-socket.on('C_NuevoJugador', function (msg) {
+socket.on('C_NuevoJugadorSala', function (msg) {
     // agregar html del nuevo jugador
     console.log(msg);
 });
@@ -58,6 +63,6 @@ $('#btnPlay').click(function () {
     }else {
         // De no haber introducido un codigo de sala, se crea una sala nueva
         let codigoSala = Math.random().toString(36).substr(2, 4);
-        socket.emit('S_NuevaSala', codigoSala);
+        socket.emit('S_NuevaSala', {idSala: codigoSala, nickname});
     }
 });
