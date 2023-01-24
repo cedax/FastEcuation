@@ -55,9 +55,10 @@ const eventosSocketIo = (io) => {
                     // Enviar mensaje a todos los sockets de la sala
                     socket.to(idSala).emit('C_NuevoJugadorSala', nickname + ' se unio a la sala');
                 }else {
-                    socket.emit('C_UnirSala', response.data);
+                    socket.emit('C_UnirSalaNicknameExistente', response.data);
                 }
             }).catch(function (error) {
+                // Todo: Agregar un evento global que informe de errores huerfanos como este
                 console.log(error.response.data);
             });
         });

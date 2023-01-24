@@ -24,8 +24,8 @@ socket.on('C_NuevaSala', function (msg) {
     }
 });
 
-// Se ejecuta cuando hubo un error al unirse a una sala
-socket.on('C_UnirSala', function (msg) {
+// Se ejecuta cuando hubo un error al unirse a una sala porque el nickname ya existe
+socket.on('C_UnirSalaNicknameExistente', function (msg) {
     console.log(msg.message);
 });
 
