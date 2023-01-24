@@ -1,7 +1,7 @@
-const modelo = require('../models/usuario');
+const modeloUsuario = require('../models/usuario');
 
 exports.obtenerDatos = (req, res) => {
-    modelo.find({}, (err, data) => {
+    modeloUsuario.find({}, (err, data) => {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -11,7 +11,7 @@ exports.obtenerDatos = (req, res) => {
 }
 
 exports.insertData = (req, res) => {
-    const data = new modelo(req.body);
+    const data = new modeloUsuario(req.body);
     data.save((err, data) => {
         if (err) {
             res.status(500).send(err);

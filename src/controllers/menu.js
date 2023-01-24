@@ -1,4 +1,4 @@
-const modelo = require('../models/usuario');
+//const modelo = require('../models/usuario');
 
 const { subirNivelesPath } = require('../tools/paths');
 

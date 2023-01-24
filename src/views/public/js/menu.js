@@ -1,10 +1,32 @@
 // Objeto que contiene los metodos de socket.io
 var socket = io();
 
-// Evento que se ejecuta despues de comprobar si el codigo de sala existe en el servidor
-socket.on('C_VerificaSala', function (msg) {
+/************************ EVENTOS ************************/
+
+// Se ejecuta despues de comprobar si el codigo de sala existe en el servidor
+socket.on('C_SalaVerificada', function (msg) {
+    if (msg.message === 'Sala no encontrada') {
+        alert(msg.message);
+    }else {
+        socket.emit('S_UnirSala', msg.codigo);
+    }
+});
+
+// Se ejecuta despues de crear una nueva sala
+socket.on('C_NuevaSala', function (msg) {
     console.log(msg);
 });
+
+// Se ejecuta cuando un nuevo jugador se une a la sala C_NuevoJugador
+socket.on('C_NuevoJugador', function (msg) {
+    console.log(msg);
+});
+
+socket.on('C_JugadorAbandono', function (msg) {
+    console.log(msg);
+});
+
+/************************ LOGICA ************************/
 
 $('#btnPlay').click(function () {
     // Valor del input de codigo de sala
@@ -20,9 +42,9 @@ $('#btnPlay').click(function () {
 
         // Checar si el codigo de sala existe en el servidor
         socket.emit('S_VerificaSala', idSala);
+    }else {
+        // De no haber introducido un codigo de sala, se crea una sala nueva
+        let codigoSala = Math.random().toString(36).substr(2, 4);
+        socket.emit('S_NuevaSala', codigoSala);
     }
-
-    // De no haber introducido un codigo de sala, se crea una sala nueva
-    let codigoSala = Math.random().toString(36).substr(2, 4);
-    socket.emit('S_NuevaSala', codigoSala);
 });
