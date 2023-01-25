@@ -20,4 +20,7 @@ router.get(`/${path}/agregar-jugador/`, controlador.agregarJugador);
 // Ruta eliminar-jugador GET
 router.get(`/${path}/eliminar-jugador/`, controlador.eliminarJugador);
 
+// Ruta jugadores GET
+router.get(`/${path}/jugadores/`, controlador.obtenerJugadores);
+
 module.exports = router;
